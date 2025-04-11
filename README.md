@@ -29,51 +29,65 @@ I mapped my existing tools into a complete CTEM (Continuous Threat Exposure Mana
 
 ---
 
-## CyberSec Warfare Platform Architecture (Realistic SIEM Ecosystem)
+## CyberSec Warfare Platform Architecture (Enterprise-Integrated Diagram)
 
 ```
-                         [ CISO Dashboard / Security Leadership ]
-                                        ▲
-                                        │
-                                        ▼
-┌────────────┐        ┌──────────────┐         ┌─────────────┐
-│  Splunk    │<──────▶   SIEM Core   │<───────▶ Microsoft    │
-│  Sentinel  │        │ (HEC/API In) │         │ Sentinel    │
-└────┬───────┘        └──────┬───────┘         └────┬────────┘
-     │                        │                         │
-     ▼                        ▼                         ▼
-┌────────────┐       ┌───────────────────┐     ┌─────────────────┐
-│ RiskRank-AI│──────▶│   SLAWatchdog     │────▶│   AutoBlue      │
-└────────────┘       └─────┬─────────────┘     └────────┬────────┘
-     │                      │                              │
-     ▼                      ▼                              ▼
-[CVE Risk Score]    [SLA Countdown / Escalation]     [Patch Verification]
-                                                      [SHA256 / JSON Logs]
-                                                             │
-                                                             ▼
-                                                    ┌─────────────────┐
-                                                    │ WebHound-AI     │
-                                                    └─────┬───────────┘
-                                                          ▼
-                                              [Browser-Based JS Scanner]
-                                              [Pattern AI + VT/URLScan]
-                                                             │
-                                                             ▼
-                                                    ┌─────────────────┐
-                                                    │   AutoRed       │
-                                                    └─────────────────┘
-                                                         ▲
-                                                         │
-                                               [MITRE-based Red Team Sim]
-                                               [C2, Lateral, SQLi, Phish]
+                          [ Executive Dashboard / Compliance / CISO ]
+                                          ▲
+                                          │
+                                          ▼
+                           ┌─────────────────────────────┐
+                           │  Splunk / Microsoft Sentinel│
+                           └─────┬───────────────────────┘
+                                 │  Receives logs + alerts
+                                 ▼
+      ┌────────────┬────────────┴────────────┬────────────┐
+      ▼            ▼                         ▼            ▼
+[RiskRank-AI]  [SLAWatchdog]           [AutoBlue]   [WebHound-AI]
+  ▲                ▲                      ▲             ▲
+  │                │                      │             │
+  │     ┌──────────┴───────────┐   ┌──────┴────────┐    │
+  │     │     CVSS / EPSS      │   │ Patch Validation │  │
+  │     │  Asset Criticality   │   │ SHA256, Timestamp│  │
+  │     └──────────┬───────────┘   └─────────────────┘  │
+  │                │                                    │
+  ▼                ▼                                    ▼
+[Prioritized CVEs] ────────────────┐        [Browser Threats: JS, C2, Redirects]
+                                   ▼
+                             ┌────────────┐
+                             │ AutoRed    │
+                             └────┬───────┘
+                                  ▼
+               [Red Team TTPs: Phishing, SQLi, Lateral, Beaconing]
+                                  ▼
+                             JSON logs (MITRE aligned)
+
+                ◄────────────────────[ FEEDS BACK ]────────────────────►
+                        To SIEM dashboards, SOAR playbooks, alerts
+
+──────────────────────────── External Data Sources ────────────────────────────
+
+[Employee Devices / Workstations]       [IoT/OT Devices: HVAC, Sensors, RFID]
+        │                                         │
+        ▼                                         ▼
+┌────────────────────┐                  ┌────────────────────────────┐
+│     CVE Scanning   │◄─Input──────────▶│ Protocol Scanning (Zigbee, │
+│ (Tenable / Qualys) │                  │ MQTT, CoAP, Bluetooth)     │
+└────────────────────┘                  └────────────────────────────┘
+        │                                         │
+        ▼                                         ▼
+[Device Risk Feed]                         [Firmware + API Vulnerability Scan]
+        │                                         │
+        └───────► Sent to CTEM Pipeline ──────────┘
 
 ```
 
-**Legend**:
-- All logs, alerts, and telemetry flow into Splunk/Sentinel
-- SIEM dashboards track MTTR, SLA breach, CTEM coverage
-- Simulations + scan results are stored and visualized in real-time
-- Each tool is modular and can operate independently or in sync
+**Legend:**
+- Arrows show telemetry flow and threat injection/detection feedback loops
+- External devices (employees, OT/IoT) contribute vulnerabilities or are test targets
+- Splunk/Sentinel receive ALL output: telemetry, alerts, CVE reports, and breach simulations
+- All tools modular and ready for compliance use (HIPAA, PCI-DSS, ISO 27001, NIST 800-53)
+
 
 ## Tool Breakdown
 
