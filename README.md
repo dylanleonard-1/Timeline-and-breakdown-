@@ -29,35 +29,51 @@ I mapped my existing tools into a complete CTEM (Continuous Threat Exposure Mana
 
 ---
 
-## Architecture Overview
+## CyberSec Warfare Platform Architecture (Realistic SIEM Ecosystem)
 
 ```
-                        ┌────────────┐
-                        │ RiskRank-AI│
-                        └────┬───────┘
-                             ▼
-                     ┌────────────┐
-                     │SLAWatchdog │──────┐
-                     └────┬───────┘      │
-                          ▼              ▼
-                 ┌──────────────┐  ┌────────────┐
-                 │ AutoBlue     │  │ WebHound-AI│
-                 └────┬─────────┘  └─────┬──────┘
-                      ▼                 ▼
-                  Patch Logs        Threat Logs
-                      ▼                 ▼
-                ┌─────────────────────────────┐
-                │       Splunk / Sentinel     │
-                └──────┬──────────────────────┘
-                       ▼
-               ┌───────────────┐
-               │   AutoRed     │
-               └───────────────┘
-                   Simulates MITRE attacks
-                   Feeds telemetry back to SIEM
+                         [ CISO Dashboard / Security Leadership ]
+                                        ▲
+                                        │
+                                        ▼
+┌────────────┐        ┌──────────────┐         ┌─────────────┐
+│  Splunk    │<──────▶   SIEM Core   │<───────▶ Microsoft    │
+│  Sentinel  │        │ (HEC/API In) │         │ Sentinel    │
+└────┬───────┘        └──────┬───────┘         └────┬────────┘
+     │                        │                         │
+     ▼                        ▼                         ▼
+┌────────────┐       ┌───────────────────┐     ┌─────────────────┐
+│ RiskRank-AI│──────▶│   SLAWatchdog     │────▶│   AutoBlue      │
+└────────────┘       └─────┬─────────────┘     └────────┬────────┘
+     │                      │                              │
+     ▼                      ▼                              ▼
+[CVE Risk Score]    [SLA Countdown / Escalation]     [Patch Verification]
+                                                      [SHA256 / JSON Logs]
+                                                             │
+                                                             ▼
+                                                    ┌─────────────────┐
+                                                    │ WebHound-AI     │
+                                                    └─────┬───────────┘
+                                                          ▼
+                                              [Browser-Based JS Scanner]
+                                              [Pattern AI + VT/URLScan]
+                                                             │
+                                                             ▼
+                                                    ┌─────────────────┐
+                                                    │   AutoRed       │
+                                                    └─────────────────┘
+                                                         ▲
+                                                         │
+                                               [MITRE-based Red Team Sim]
+                                               [C2, Lateral, SQLi, Phish]
+
 ```
 
----
+**Legend**:
+- All logs, alerts, and telemetry flow into Splunk/Sentinel
+- SIEM dashboards track MTTR, SLA breach, CTEM coverage
+- Simulations + scan results are stored and visualized in real-time
+- Each tool is modular and can operate independently or in sync
 
 ## Tool Breakdown
 
