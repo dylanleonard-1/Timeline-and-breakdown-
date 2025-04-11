@@ -9,115 +9,146 @@
 ## About Me
 
 I build tools that simulate real threats, automate defense, and teach people how to respond.  
-Through my company **CyberSec Warfare**, I’ve developed a complete ecosystem for red + blue team simulation, AI-powered threat detection, and compliance-ready patching systems.
+Through my company **CyberSec Warfare**, I’ve developed a full-cycle ecosystem for red + blue team simulation, AI-powered threat detection, and compliance-ready patching systems.
 
-These tools power:
-- My personal cybersecurity training systems
-- The active defense of clients in healthcare, retail, and fintech
-- Live SIEM integrations for threat testing and compliance assurance
+These tools support:
+- Personal cybersecurity training environments
+- Real client defenses across healthcare, fintech, and retail
+- Continuous SIEM/SOAR-based validation and threat simulation
 
 ---
 
 ## CVS Health Alignment
 
-After researching CVS Health’s public security incident in 2021 (1B+ records exposed due to cloud misconfiguration), I chosen from the tools I have to show AI-driven threat simulation and remediation platform to proactively prevent such incidents across:
-- OT (Operational Tech)
+After analyzing CVS Health’s public misconfiguration breach in 2021 (1B+ session/device records exposed), I identified multiple ways to proactively prevent such threats across:
+- OT (Operational Technology)
 - IoT (Internet of Things)
 - AI/ML Security
 
+I mapped my existing tools into a complete CTEM (Continuous Threat Exposure Management) solution designed for real-time visibility, SLA enforcement, and remediation at scale.
+
 ---
 
-## My Solutions for CVS Health
+## Architecture Overview
 
-### 1. `AutoRed` – MITRE-Aligned Threat Emulation  
-Simulates real-world attacks:
-- T1566 (Phishing), T1110.001 (SSH Brute), T1190 (SQLi), T1021 (Lateral), T1071 (Beaconing)
-- Full telemetry via JSON + Splunk/Sentinel
-- Helps test MTTR, SOAR playbooks, and blue team readiness
+```
+                        ┌────────────┐
+                        │ RiskRank-AI│
+                        └────┬───────┘
+                             ▼
+                     ┌────────────┐
+                     │SLAWatchdog │──────┐
+                     └────┬───────┘      │
+                          ▼              ▼
+                 ┌──────────────┐  ┌────────────┐
+                 │ AutoBlue     │  │ WebHound-AI│
+                 └────┬─────────┘  └─────┬──────┘
+                      ▼                 ▼
+                  Patch Logs        Threat Logs
+                      ▼                 ▼
+                ┌─────────────────────────────┐
+                │       Splunk / Sentinel     │
+                └──────┬──────────────────────┘
+                       ▼
+               ┌───────────────┐
+               │   AutoRed     │
+               └───────────────┘
+                   Simulates MITRE attacks
+                   Feeds telemetry back to SIEM
+```
+
+---
+
+## Tool Breakdown
+
+### 1. `AutoRed` – MITRE-Adversary Simulation  
+- T1566 (Phish), T1110.001 (SSH), T1190 (SQLi), T1021 (Lateral), T1071 (C2)
+- Simulates active threats + logs real telemetry to Splunk/Sentinel
+- Measures MTTR, alert response, and blue team visibility
 
 **→ [View AutoRed Simulation](autored_perfect_final.html)**
 
 ---
 
-### 2. `RiskRank-AI` – CVE Prioritization Engine  
-- Calculates dynamic risk score from CVSS + EPSS + SLA urgency
-- Adds asset context (public, crown-jewel, internal)
-- Logs for dashboards / remediation boards
+### 2. `RiskRank-AI` – Dynamic CVE Risk Prioritization  
+- Combines CVSS, EPSS, asset criticality, and SLA logic
+- Generates ranked CVE list with tags + remediation timelines
 
-**→ [View RiskRank-AI Logic](riskrank_ai.html)**
-
----
-
-### 3. `SLAWatchdog` – Patch Enforcement + Escalation  
-- Monitors SLA deadlines
-- Reads `AutoBlue` patch logs
-- Sends breach alerts to Splunk/Sentinel
-
-**→ [View SLA Enforcement](sla_watchdog.html)**
+**→ [View RiskRank-AI](riskrank_ai.html)**
 
 ---
 
-### 4. `AutoBlue` – Real Remediation with SIEM Proof  
-- Validates patches with SHA256 hashes
-- Logs to JSON → Splunk
-- Integrates with Qualys / Tenable / Prisma
-- Fully CTEM-ready
+### 3. `SLAWatchdog` – SLA Enforcement & Escalation  
+- Monitors unpatched CVEs
+- Escalates breached SLA targets to Splunk/Sentinel
+- Interfaces directly with AutoBlue patch logs
+
+**→ [View SLA Watchdog](sla_watchdog.html)**
+
+---
+
+### 4. `AutoBlue` – Patch Automation with Proof  
+- Validates patches with pre/post SHA256 hashes
+- Creates compliance-grade JSON reports
+- Integrates with Tenable, Qualys, Prisma
 
 **→ [View AutoBlue Engine](autoblue.html)**
 
 ---
 
-### 5. `WebHound-AI` – Headless JavaScript Threat Scanner  
-- AI-style scoring for obfuscated JS, redirect chains, formjackers
-- Checks domains via VirusTotal
-- Logs verdicts and threats for SOC review
+### 5. `WebHound-AI` – JavaScript Threat Hunter  
+- Uses Selenium + custom AI pattern scoring
+- Identifies malicious JS (eval, base64, beacons, etc.)
+- Checks external scripts via VirusTotal & URLScan
 
 **→ [View WebHound-AI](webhound_ai.html)**
 
 ---
 
-## Technology Stack
+## Stack & Skills
 
 - **Languages:** Python, Bash, PowerShell
-- **Frameworks:** MITRE ATT&CK, NIST 800-53, ISO 27001
-- **Tools Used:** Qualys, Tenable, Shodan, Splunk, Sentinel, VirusTotal, Wireshark
-- **Security Domains:** OT/IoT/AI Threats, SLA, Patch Compliance, CTEM, Threat Simulation
+- **Security Frameworks:** MITRE ATT&CK, NIST 800-53, ISO 27001, PCI-DSS
+- **Tools:** Qualys, Tenable, Wiz, Prisma, VirusTotal, Shodan, Wireshark
+- **Integrations:** Splunk (HEC), Microsoft Sentinel, SOAR pipelines
+- **Domains:** OT/IoT/AI Security, Red Team Simulation, Patch Enforcement, CTEM
 
 ---
 
-## Strategy for CVS Health
+## CVS Strategy Overview
 
-### Proposed Plan (based on 2021 incident):
+### Incident Response:
+- Validate patching via AutoBlue
+- Escalate SLA violations with SLAWatchdog
+- Simulate real attackers with AutoRed
 
-1. **Audit** cloud/IaC environments for misconfigurations
-2. **Use AutoBlue** to validate and log every patch
-3. **Scan all IoT/OT/AI assets** using WebHound-AI and Shodan integrations
-4. **Continuously test defenses** with AutoRed simulations
-5. **Track everything** with SLAWatchdog and RiskRank-AI dashboards
+### IoT/OT Security:
+- Scan Zigbee/MQTT/CoAP firmware configs
+- Identify vulnerable embedded systems
+- Shodan + WebHound-AI for exposed interfaces
 
----
-
-## Expandability
-
-All modules are:
-- Modular
-- Token-authenticated
-- Built to integrate with **any SIEM or SOAR**
-
-If CVS Health uses tools I haven’t listed? That’s fine—my engines are designed to adapt.
+### AI/ML Security:
+- Detect poisoning/inversion risks
+- Perform model integrity checks
 
 ---
 
-## Want to See It Live?
+## Deployment & Modularity
 
-Ask me for a **demo walkthrough** or deploy the lab using Docker or Python3 on Ubuntu.  
-Each module is self-documenting and built for CI/CD security.
+All tools are:
+- Self-contained Python modules
+- Built with REST API forwarding support
+- Designed to plug into **any SIEM or SOAR**
+
+Tokens, paths, and modules are modular for enterprise adoption.
 
 ---
 
-## Contact
+## Demo & Contact
 
-**Dylan Leonard**  
-CyberSec Warfare  
-GitHub: [@dylanleonard-1](https://github.com/dylanleonard-1)  
-LinkedIn: [linkedin.com/in/dylan-leonard-sec](https://linkedin.com/in/dylan-leonard-sec)
+Ask for a live **walkthrough**, full PDF export, or dashboard tour.  
+This suite is built for real SOC use, training, and compliance auditing.
+
+**Author:** Dylan Leonard  
+**GitHub:** [@dylanleonard-1](https://github.com/dylanleonard-1)  
+**LinkedIn:** [linkedin.com/in/dylan-leonard-sec](https://linkedin.com/in/dylan-leonard-sec)
